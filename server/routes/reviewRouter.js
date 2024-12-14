@@ -4,7 +4,7 @@ const authenticateToken = require('../middleware/authenticateToken');
 
 const router = Router();
 
-router.get('/bakery/:bakeryId', ReviewController.getReviewsByBakery);
+router.get('/flowerShop/:flowerShopId', ReviewController.getReviewsByFlowerShop);
 
 router.post('/', authenticateToken, ReviewController.createReview);
 router.get('/', ReviewController.getAllReviews);
