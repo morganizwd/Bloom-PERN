@@ -12,8 +12,8 @@ module.exports = function (req, res, next) {
 
         if (decoded.userId) {
             req.user = { userId: decoded.userId };
-        } else if (decoded.bakeryId) {
-            req.user = { bakeryId: decoded.bakeryId };
+        } else if (decoded.flowerShopId) {
+            req.user = { flowerShopId: decoded.flowerShopId };
         } else {
             return res.status(401).json({ message: 'Не авторизован' });
         }
