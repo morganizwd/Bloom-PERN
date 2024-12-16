@@ -1,5 +1,3 @@
-// src/components/FlowerShopDetails.js
-
 import React, { useEffect, useState, useContext } from 'react';
 import axios from '../api/axiosConfig';
 import { useParams } from 'react-router-dom';
@@ -21,25 +19,25 @@ import {
     Alert,
 } from '@mui/material';
 
-function FlowerShopDetails() {
+function MetizShopDetails() {
     const { id } = useParams();
     const { cartItems, addToCart, clearCart } = useContext(CartContext);
     const { authData } = useContext(AuthContext);
-    const [flowerShop, setFlowerShop] = useState(null);
+    const [metizShop, setMetizShop] = useState(null);
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [quantities, setQuantities] = useState({});
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetchFlowerShop();
+        fetchMetizShop();
         fetchReviews();
     }, [id]);
 
-    const fetchFlowerShop = async () => {
+    const fetchMetizShop = async () => {
         try {
-            const response = await axios.get(`/api/flowershops/${id}`);
-            setFlowerShop(response.data);
+            const response = await axios.get(`/api/metizshops/${id}`);
+            setMetizShop(response.data);
             setLoading(false);
         } catch (error) {
             console.error('Ошибка при получении информации о магазине цветов:', error);
@@ -49,7 +47,7 @@ function FlowerShopDetails() {
 
     const fetchReviews = async () => {
         try {
-            const response = await axios.get(`/api/reviews/flowershop/${id}`);
+            const response = await axios.get(`/api/reviews/metizshop/${id}`);
             setReviews(response.data);
         } catch (error) {
             console.error('Ошибка при получении отзывов:', error);
@@ -92,7 +90,7 @@ function FlowerShopDetails() {
         return stars;
     };
 
-    const isDifferentFlowerShop = cartItems.length > 0 && cartItems[0].Product.flowerShopId !== parseInt(id, 10);
+    const isDifferentMetizShop = cartItems.length > 0 && cartItems[0].Product.metizShopId !== parseInt(id, 10);
 
     return (
         <Container sx={{ padding: '20px' }}>
@@ -103,10 +101,10 @@ function FlowerShopDetails() {
                         Загрузка информации о магазине цветов...
                     </Typography>
                 </Box>
-            ) : flowerShop ? (
+            ) : metizShop ? (
                 <Box>
                     <Typography variant="h3" component="h1" gutterBottom>
-                        {flowerShop.name}
+                        {metizShop.name}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                         <Typography variant="h6" sx={{ marginRight: '8px' }}>
@@ -123,32 +121,32 @@ function FlowerShopDetails() {
                         </Typography>
                     </Box>
 
-                    {flowerShop.photo && (
+                    {metizShop.photo && (
                         <CardMedia
                             component="img"
-                            image={`http://localhost:5000${flowerShop.photo}`}
-                            alt={flowerShop.name}
+                            image={`http://localhost:5000${metizShop.photo}`}
+                            alt={metizShop.name}
                             sx={{ width: '300px', height: 'auto', marginBottom: '20px' }}
                         />
                     )}
                     <Typography variant="body1" paragraph>
-                        {flowerShop.description}
+                        {metizShop.description}
                     </Typography>
                     <Typography variant="body1" paragraph>
-                        Адрес: {flowerShop.address}
+                        Адрес: {metizShop.address}
                     </Typography>
                     <Typography variant="body1" paragraph>
-                        Телефон: {flowerShop.phone}
+                        Телефон: {metizShop.phone}
                     </Typography>
                     <Typography variant="body1" paragraph>
-                        Контактное лицо: {flowerShop.contact_person_name}
+                        Контактное лицо: {metizShop.contact_person_name}
                     </Typography>
 
                     <Typography variant="h4" component="h2" gutterBottom>
                         Товары
                     </Typography>
 
-                    {isDifferentFlowerShop && (
+                    {isDifferentMetizShop && (
                         <Box sx={{
                             marginBottom: '10px',
                             padding: '10px',
@@ -174,9 +172,9 @@ function FlowerShopDetails() {
                         </Box>
                     )}
 
-                    {flowerShop.Products && flowerShop.Products.length > 0 ? (
+                    {metizShop.Products && metizShop.Products.length > 0 ? (
                         <Grid container spacing={4}>
-                            {flowerShop.Products.map((product) => (
+                            {metizShop.Products.map((product) => (
                                 <Grid item xs={12} sm={6} md={4} key={product.id}>
                                     <Card>
                                         {product.photo && (
@@ -213,7 +211,7 @@ function FlowerShopDetails() {
                                                         variant="contained"
                                                         color="primary"
                                                         onClick={() => handleAddToCart(product)}
-                                                        disabled={isDifferentFlowerShop}
+                                                        disabled={isDifferentMetizShop}
                                                     >
                                                         Добавить в корзину
                                                     </Button>
@@ -274,4 +272,4 @@ function FlowerShopDetails() {
 
 }
 
-export default FlowerShopDetails;
+export default MetizShopDetails;

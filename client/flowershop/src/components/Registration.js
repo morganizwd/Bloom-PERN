@@ -28,11 +28,11 @@ function Registration() {
         phone: '',
         birth_date: '',
         description: '',
-        flowershopName: '',
+        metizshopName: '',
         contactPersonName: '',
         registrationNumber: '',
-        flowershopPhone: '',
-        flowershopDescription: '',
+        metizshopPhone: '',
+        metizshopDescription: '',
         address: '',
     });
     const [photo, setPhoto] = useState(null);
@@ -52,11 +52,11 @@ function Registration() {
             phone: '',
             birth_date: '',
             description: '',
-            flowershopName: '',
+            metizshopName: '',
             contactPersonName: '',
             registrationNumber: '',
-            flowershopPhone: '',
-            flowershopDescription: '',
+            metizshopPhone: '',
+            metizshopDescription: '',
             address: '',
         });
         setPhoto(null);
@@ -82,13 +82,12 @@ function Registration() {
             return;
         }
     
-        if (role === 'flowershop') {
-            // Additional validation for FlowerShop
+        if (role === 'metizshop') {
             const requiredFields = [
-                'flowershopName',
+                'metizshopName',
                 'contactPersonName',
                 'registrationNumber',
-                'flowershopPhone',
+                'metizshopPhone',
                 'address',
             ];
             for (let field of requiredFields) {
@@ -116,12 +115,12 @@ function Registration() {
             data.append('birth_date', formData.birth_date);
             data.append('description', formData.description);
         } else {
-            data.append('name', formData.flowershopName); // Изменено
+            data.append('name', formData.metizshopName); // Изменено
             data.append('contact_person_name', formData.contactPersonName);
             data.append('registration_number', formData.registrationNumber);
-            data.append('phone', formData.flowershopPhone); // Изменено
+            data.append('phone', formData.metizshopPhone); // Изменено
             data.append('address', formData.address);
-            data.append('description', formData.flowershopDescription); // Изменено
+            data.append('description', formData.metizshopDescription); // Изменено
         }
     
         data.append('email', formData.email);
@@ -132,7 +131,7 @@ function Registration() {
         }
     
         try {
-            const url = role === 'user' ? '/api/users/registration' : '/api/flowershops/registration';
+            const url = role === 'user' ? '/api/users/registration' : '/api/metizshops/registration';
             await axios.post(url, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -155,11 +154,11 @@ function Registration() {
             phone: 'Телефон',
             birth_date: 'Дата рождения',
             description: 'Описание',
-            flowershopName: 'Название магазина цветов',
+            metizshopName: 'Название магазина цветов',
             contactPersonName: 'Контактное лицо',
             registrationNumber: 'Регистрационный номер',
-            flowershopPhone: 'Телефон магазина цветов',
-            flowershopDescription: 'Описание магазина цветов',
+            metizshopPhone: 'Телефон магазина цветов',
+            metizshopDescription: 'Описание магазина цветов',
             address: 'Адрес',
         };
         return labels[fieldName] || fieldName;
@@ -181,7 +180,7 @@ function Registration() {
                         onChange={handleRoleChange}
                     >
                         <MenuItem value="user">Покупатель</MenuItem>
-                        <MenuItem value="flowershop">Магазин цветов</MenuItem>
+                        <MenuItem value="metizshop">Магазин цветов</MenuItem>
                     </Select>
                 </FormControl>
 
@@ -259,13 +258,13 @@ function Registration() {
                         </Button>
                     </>
                 )}
-                {role === 'flowershop' && (
+                {role === 'metizshop' && (
                     <>
                         <TextField
                             label="Название магазина цветов"
-                            name="flowershopName"
+                            name="metizshopName"
                             required
-                            value={formData.flowershopName}
+                            value={formData.metizshopName}
                             onChange={handleChange}
                         />
                         <TextField
@@ -284,9 +283,9 @@ function Registration() {
                         />
                         <TextField
                             label="Телефон магазина цветов"
-                            name="flowershopPhone"
+                            name="metizshopPhone"
                             required
-                            value={formData.flowershopPhone}
+                            value={formData.metizshopPhone}
                             onChange={handleChange}
                         />
                         <TextField
@@ -298,10 +297,10 @@ function Registration() {
                         />
                         <TextField
                             label="Описание магазина цветов"
-                            name="flowershopDescription"
+                            name="metizshopDescription"
                             multiline
                             rows={4}
-                            value={formData.flowershopDescription}
+                            value={formData.metizshopDescription}
                             onChange={handleChange}
                         />
                         <Button

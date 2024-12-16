@@ -1,4 +1,4 @@
-const { Basket, BasketItem, Product, User, FlowerShop } = require('../models/models');
+const { Basket, BasketItem, Product, User, MetizShop } = require('../models/models');
 
 class BasketController {
     async getBasket(req, res) {
@@ -53,8 +53,8 @@ class BasketController {
             }
 
             if (basket.BasketItems && basket.BasketItems.length > 0) {
-                const existingFlowerShopId = basket.BasketItems[0].Product.flowerShopId;
-                if (existingFlowerShopId !== product.flowerShopId) {
+                const existingMetizShopId = basket.BasketItems[0].Product.MetizShopId;
+                if (existingMetizShopId !== product.MetizShopId) {
                     return res.status(400).json({ message: 'В корзине могут быть товары только из одного магазина цветов.' });
                 }
             }

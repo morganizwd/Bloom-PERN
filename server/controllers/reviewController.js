@@ -1,4 +1,4 @@
-const { Review, User, FlowerShop, Order } = require('../models/models');
+const { Review, User, MetizShop, Order } = require('../models/models');
 
 class ReviewController {
 
@@ -25,14 +25,14 @@ class ReviewController {
                 return res.status(400).json({ message: 'Отзыв для данного заказа уже существует' });
             }
 
-            const flowerShopId = order.flowerShopId;
+            const metizShopId = order.metizShopId;
 
             const review = await Review.create({
                 rating,
                 short_review,
                 description,
                 orderId,
-                flowerShopId,
+                metizShopId,
                 userId,
             });
 
@@ -50,7 +50,7 @@ class ReviewController {
             const review = await Review.findByPk(id, {
                 include: [
                     { model: Order },
-                    { model: FlowerShop },
+                    { model: MetizShop },
                     { model: User, attributes: ['name', 'surname'] },
                 ],
             });
@@ -71,7 +71,7 @@ class ReviewController {
             const reviews = await Review.findAll({
                 include: [
                     { model: Order },
-                    { model: FlowerShop },
+                    { model: MetizShop },
                     { model: User, attributes: ['name', 'surname'] },
                 ],
                 order: [['createdAt', 'DESC']],
@@ -135,15 +135,15 @@ class ReviewController {
         }
     }
 
-    async getReviewsByFlowerShop(req, res) {
+    async getReviewsByMetizShop(req, res) {
         try {
-            const { flowerShopId } = req.params;
+            const { metizShopId } = req.params;
 
             const reviews = await Review.findAll({
-                where: { flowerShopId },
+                where: { metizShopId },
                 include: [
                     { model: Order },
-                    { model: FlowerShop },
+                    { model: MetizShop },
                     { model: User, attributes: ['name', 'surname'] },
                 ],
                 order: [['createdAt', 'DESC']],

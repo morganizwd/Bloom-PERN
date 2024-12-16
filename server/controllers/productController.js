@@ -1,4 +1,4 @@
-const { Product, FlowerShop } = require('../models/models');
+const { Product, MetizShop } = require('../models/models');
 const fs = require('fs');
 const path = require('path');
 
@@ -6,14 +6,14 @@ class ProductController {
     async create(req, res) {
         try {
             const { name, description, price } = req.body;
-            const flowerShopId = req.user.flowerShopId;
+            const metizShopId = req.user.metizShopId;
 
-            if (!flowerShopId) {
+            if (!metizShopId) {
                 return res.status(403).json({ message: 'Нет прав для создания товара' });
             }
 
-            const flowerShop = await FlowerShop.findByPk(flowerShopId);
-            if (!flowerShop) {
+            const MetizShop = await MetizShop.findByPk(metizShopId);
+            if (!MetizShop) {
                 return res.status(404).json({ message: 'Магазин цветов не найден' });
             }
 
@@ -21,7 +21,7 @@ class ProductController {
                 name,
                 description,
                 price,
-                flowerShopId,
+                metizShopId,
                 photo: req.file ? `/uploads/products/${req.file.filename}` : null,
             });
 
@@ -35,7 +35,7 @@ class ProductController {
     async findOne(req, res) {
         try {
             const product = await Product.findByPk(req.params.id, {
-                include: [{ model: FlowerShop }],
+                include: [{ model: MetizShop }],
             });
             if (!product) {
                 return res.status(404).json({ message: 'Продукт не найден' });
@@ -50,7 +50,7 @@ class ProductController {
     async findAll(req, res) {
         try {
             const products = await Product.findAll({
-                include: [{ model: FlowerShop }],
+                include: [{ model: MetizShop }],
             });
             res.json(products);
         } catch (error) {
@@ -115,16 +115,16 @@ class ProductController {
         }
     }
 
-    async findByFlowerShop(req, res) {
+    async findByMetizShop(req, res) {
         try {
-            const { flowerShopId } = req.params;
+            const { metizShopId } = req.params;
 
-            const flowerShop = await FlowerShop.findByPk(flowerShopId);
-            if (!flowerShop) {
+            const MetizShop = await MetizShop.findByPk(metizShopId);
+            if (!MetizShop) {
                 return res.status(404).json({ message: 'Магазин цветов не найден' });
             }
 
-            const products = await Product.findAll({ where: { flowerShopId } });
+            const products = await Product.findAll({ where: { metizShopId } });
 
             res.json(products);
         } catch (error) {

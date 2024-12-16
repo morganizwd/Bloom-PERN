@@ -6,12 +6,12 @@ import Registration from './components/Registration';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import HomePage from './components/HomePage';
-import FlowerShopDetails from './components/FlowerShopDetails';
-import FlowerShopAdmin from './components/FlowerShopAdmin';
-import FlowerShopOrders from './components/FlowerShopOrders';
+import MetizShopDetails from './components/MetizShopDetails';
+import MetizShopAdmin from './components/MetizShopAdmin';
+import MetizShopOrders from './components/MetizShopOrders';
 import PrivateRoute from './components/PrivateRoute';
-import FlowerShopRoute from './components/FlowerShopRoute';
-import EditFlowerShopInfo from './components/EditFlowerShopInfo';
+import MetizShopRoute from './components/MetizShopRoute';
+import EditMetizShopInfo from './components/EditMetizShopInfo';
 import ProductList from './components/ProductList';
 import AddProduct from './components/AddProduct';
 import EditProduct from './components/EditProduct';
@@ -32,7 +32,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/" element={<HomePage />} />
-          <Route path="/flowershops/:id" element={<FlowerShopDetails />} />
+          <Route path="/metizrshops/:id" element={<MetizShopDetails />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/register" element={<Registration />} />
           <Route path="/login" element={<Login />} />
@@ -45,51 +45,51 @@ function App() {
             }
           />
           <Route
-            path="/flowershop-admin"
+            path="/metizrshops-admin"
             element={
-              <FlowerShopRoute>
-                <FlowerShopAdmin />
-              </FlowerShopRoute>
+              <MetizShopRoute>
+                <MetizShopAdmin />
+              </MetizShopRoute>
             }
           />
           <Route
-            path="/flowershop-admin/edit"
+            path="/metizrshops-admin/edit"
             element={
-              <FlowerShopRoute>
-                <EditFlowerShopInfo />
-              </FlowerShopRoute>
+              <MetizShopRoute>
+                <EditMetizShopInfo />
+              </MetizShopRoute>
             }
           />
           <Route
-            path="/flowershop-admin/products"
+            path="/metizrshops-admin/products"
             element={
-              <FlowerShopRoute>
+              <MetizShopRoute>
                 <ProductList />
-              </FlowerShopRoute>
+              </MetizShopRoute>
             }
           />
           <Route
-            path="/flowershop-admin/products/add"
+            path="/metizrshops-admin/products/add"
             element={
-              <FlowerShopRoute>
+              <MetizShopRoute>
                 <AddProduct />
-              </FlowerShopRoute>
+              </MetizShopRoute>
             }
           />
           <Route
-            path="/flowershop-admin/products/edit/:id"
+            path="/metizrshops-admin/products/edit/:id"
             element={
-              <FlowerShopRoute>
+              <MetizShopRoute>
                 <EditProduct />
-              </FlowerShopRoute>
+              </MetizShopRoute>
             }
           />
           <Route
-            path="/flowershop-admin/orders"
+            path="/metizrshops-admin/orders"
             element={
-              <FlowerShopRoute>
-                <FlowerShopOrders />
-              </FlowerShopRoute>
+              <MetizShopRoute>
+                <MetizShopOrders />
+              </MetizShopRoute>
             }
           />
         </Routes>

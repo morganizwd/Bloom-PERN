@@ -1,4 +1,4 @@
-const { Order, OrderItem, Basket, BasketItem, Product, User, FlowerShop, Review } = require('../models/models');
+const { Order, OrderItem, Basket, BasketItem, Product, User, MetizShop, Review } = require('../models/models');
 
 class OrderController {
 
@@ -26,9 +26,9 @@ class OrderController {
             }
 
             const totalCost = basket.BasketItems.reduce((acc, item) => acc + item.Product.price * item.quantity, 0);
-            const flowerShopIds = [...new Set(basket.BasketItems.map((item) => item.Product.flowerShopId))];
+            const MetizShopIds = [...new Set(basket.BasketItems.map((item) => item.Product.MetizShopId))];
 
-            if (flowerShopIds.length > 1) {
+            if (MetizShopIds.length > 1) {
                 return res.status(400).json({ message: 'Все товары должны принадлежать одному магазину цветов' });
             }
 
@@ -40,7 +40,7 @@ class OrderController {
                 status: 'на рассмотрении',
                 date_of_ordering: new Date(),
                 userId,
-                flowerShopId: flowerShopIds[0],
+                MetizShopId: MetizShopIds[0],
             });
 
             const orderItems = basket.BasketItems.map((item) => ({
@@ -79,7 +79,7 @@ class OrderController {
                         include: [{ model: User, attributes: ['name', 'surname'] }],
                     },
                     {
-                        model: FlowerShop,
+                        model: MetizShop,
                         attributes: ['id', 'name', 'email', 'phone'],
                     },
                 ],
@@ -108,7 +108,7 @@ class OrderController {
                         include: [{ model: User, attributes: ['name', 'surname'] }],
                     },
                     {
-                        model: FlowerShop,
+                        model: MetizShop,
                         attributes: ['id', 'name', 'email', 'phone'],
                     },
                 ],
@@ -162,8 +162,8 @@ class OrderController {
                 return res.status(404).json({ message: 'Заказ не найден' });
             }
 
-            const flowerShopId = req.user.flowerShopId;
-            if (order.flowerShopId !== flowerShopId) {
+            const MetizShopId = req.user.MetizShopId;
+            if (order.MetizShopId !== MetizShopId) {
                 return res.status(403).json({ message: 'У вас нет прав для обновления этого заказа.' });
             }
 
@@ -202,21 +202,21 @@ class OrderController {
         }
     }
 
-    async getFlowerShopOrders(req, res) {
+    async getMetizShopOrders(req, res) {
         try {
-            const flowerShopId = req.user.flowerShopId;
-            console.log('Получение заказов для магазина цветов ID:', flowerShopId);
-            if (!flowerShopId) {
+            const MetizShopId = req.user.MetizShopId;
+            console.log('Получение заказов для магазина цветов ID:', MetizShopId);
+            if (!MetizShopId) {
                 return res.status(401).json({ message: 'Неавторизованный пользователь' });
             }
 
-            const flowerShop = await FlowerShop.findByPk(flowerShopId);
-            if (!flowerShop) {
+            const MetizShop = await MetizShop.findByPk(MetizShopId);
+            if (!MetizShop) {
                 return res.status(404).json({ message: 'Магазин цветов не найден' });
             }
 
             const orders = await Order.findAll({
-                where: { flowerShopId: flowerShop.id },
+                where: { MetizShopId: MetizShop.id },
                 include: [
                     {
                         model: User,

@@ -3,17 +3,17 @@ import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 
-const FlowerShopRoute = ({ children }) => {
+const MetizShopRoute = ({ children }) => {
     const { authData } = useContext(AuthContext);
 
-    console.log('FlowerShopRoute: role is', authData.role, 'isAuthenticated:', authData.isAuthenticated);
+    console.log('MetizShopRoute: role is', authData.role, 'isAuthenticated:', authData.isAuthenticated);
 
     if (!authData.isAuthenticated) {
         toast.error('Для доступа к этому разделу необходимо войти в систему.');
         return <Navigate to="/login" />;
     }
 
-    if (authData.role !== 'flowershop') {
+    if (authData.role !== 'metizshop') {
         toast.error('У вас нет доступа к этому разделу.');
         return <Navigate to="/" />;
     }
@@ -21,4 +21,4 @@ const FlowerShopRoute = ({ children }) => {
     return children;
 };
 
-export default FlowerShopRoute;
+export default MetizShopRoute;

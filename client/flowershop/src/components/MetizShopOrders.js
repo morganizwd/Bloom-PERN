@@ -1,5 +1,3 @@
-// src/components/FlowerShopOrders.js
-
 import React, { useEffect, useState, useMemo, useContext, useCallback } from 'react';
 import axios from '../api/axiosConfig';
 import { AuthContext } from '../context/AuthContext';
@@ -30,7 +28,7 @@ import { Document, Packer, Paragraph, TextRun } from 'docx';
 import { saveAs } from 'file-saver';
 import TypographyComponent from '@mui/material/Typography'; // Убедитесь, что этот импорт есть
 
-function FlowerShopOrders() {
+function MetizShopOrders() {
     const { authData } = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
     const [filteredOrders, setFilteredOrders] = useState([]);
@@ -56,7 +54,7 @@ function FlowerShopOrders() {
 
     const fetchOrders = useCallback(async () => {
         try {
-            const response = await axios.get('/api/flowershops/orders', {
+            const response = await axios.get('/api/metizshops/orders', {
                 headers: {
                     Authorization: `Bearer ${authData.token}`,
                 },
@@ -614,4 +612,4 @@ function FlowerShopOrders() {
 
 }
 
-export default FlowerShopOrders;
+export default MetizShopOrders;

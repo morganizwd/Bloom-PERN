@@ -43,7 +43,7 @@ function AddProduct() {
                 },
             });
             alert('Товар успешно добавлен!');
-            navigate('/flowershop-admin/products'); 
+            navigate('/metizshop-admin/products'); 
         } catch (error) {
             console.error('Ошибка при добавлении товара:', error);
             alert('Ошибка при добавлении товара');

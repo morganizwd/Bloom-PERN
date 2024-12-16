@@ -3,7 +3,7 @@ import { Container, Typography, TextField, Button, Box, Rating } from '@mui/mate
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function ReviewForm({ flowershopId, onSubmit }) {
+function ReviewForm({ metizshopId, onSubmit }) {
     const [rating, setRating] = useState(5);
     const [shortReview, setShortReview] = useState('');
     const [description, setDescription] = useState('');
@@ -27,7 +27,7 @@ function ReviewForm({ flowershopId, onSubmit }) {
             short_review: shortReview,
             description,
             orderId,
-            flowershopId,
+            metizshopId,
         };
 
         onSubmit(reviewData);

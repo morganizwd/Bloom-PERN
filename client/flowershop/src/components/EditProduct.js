@@ -73,7 +73,7 @@ function EditProduct() {
             }
             // Navigate after a short delay to allow users to see the success message
             setTimeout(() => {
-                navigate('/flowershop-admin/products'); // Updated navigation path
+                navigate('/metizshop-admin/products'); // Updated navigation path
             }, 1500);
         } catch (error) {
             console.error('Ошибка при обновлении товара:', error);

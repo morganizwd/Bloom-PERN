@@ -24,7 +24,7 @@ import debounce from 'lodash.debounce';
 import { toast } from 'react-toastify';
 
 function HomePage() {
-    const [flowerShops, setFlowerShops] = useState([]);
+    const [metizShops, setMetizShops] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchName, setSearchName] = useState('');
     const [searchAddress, setSearchAddress] = useState('');
@@ -35,20 +35,20 @@ function HomePage() {
     const [error, setError] = useState(null);
 
     // Дебаунс для оптимизации запросов
-    const debouncedFetchFlowerShops = useCallback(
+    const debouncedFetchMetizShops = useCallback(
         debounce(() => {
-            fetchFlowerShops();
+            fetchMetizShops();
         }, 500),
         [searchName, searchAddress, ratingFilter, currentPage]
     );
 
     useEffect(() => {
-        debouncedFetchFlowerShops();
+        debouncedFetchMetizShops();
 
-        return debouncedFetchFlowerShops.cancel;
-    }, [searchName, searchAddress, ratingFilter, currentPage, debouncedFetchFlowerShops]);
+        return debouncedFetchMetizShops.cancel;
+    }, [searchName, searchAddress, ratingFilter, currentPage, debouncedFetchMetizShops]);
 
-    const fetchFlowerShops = async () => {
+    const fetchMetizShops = async () => {
         try {
             setLoading(true);
             setError(null);
@@ -61,11 +61,10 @@ function HomePage() {
             if (searchAddress.trim()) params.address = searchAddress.trim();
             if (ratingFilter > 0) params.averageRating = ratingFilter;
 
-            const response = await axios.get('/api/flowershops', { params });
+            const response = await axios.get('/api/metizshops', { params });
             console.log('API Response:', response.data); // Для отладки
 
-            // Убедитесь, что 'flowershops' или 'flowerShops' присутствует в ответе
-            setFlowerShops(response.data.flowershops || response.data.flowerShops || []);
+            setMetizShops(response.data.metizshops || response.data.metizShops || []);
             setTotalPages(Math.ceil((response.data.total || 1) / itemsPerPage));
             setLoading(false);
         } catch (error) {
@@ -81,7 +80,7 @@ function HomePage() {
         setSearchAddress('');
         setRatingFilter(0);
         setCurrentPage(1);
-        fetchFlowerShops();
+        fetchMetizShops();
     };
 
     const handlePageChange = (event, value) => {
@@ -178,9 +177,9 @@ function HomePage() {
                 </Grid>
             ) : (
                 <Grid container spacing={4}>
-                    {flowerShops.length > 0 ? (
-                        flowerShops.map((flowerShop) => (
-                            <Grid item xs={12} sm={6} md={4} key={flowerShop.id}>
+                    {metizShops.length > 0 ? (
+                        metizShops.map((metizShop) => (
+                            <Grid item xs={12} sm={6} md={4} key={metizShop.id}>
                                 <Card
                                     sx={{
                                         height: '100%',
@@ -193,12 +192,12 @@ function HomePage() {
                                         },
                                     }}
                                 >
-                                    {flowerShop.photo ? (
+                                    {metizShop.photo ? (
                                         <CardMedia
                                             component="img"
                                             height="200"
-                                            image={`http://localhost:5000${flowerShop.photo}`}
-                                            alt={flowerShop.name}
+                                            image={`http://localhost:5000${metizShop.photo}`}
+                                            alt={metizShop.name}
                                         />
                                     ) : (
                                         <CardMedia
@@ -210,24 +209,24 @@ function HomePage() {
                                     )}
                                     <CardContent sx={{ flexGrow: 1 }}>
                                         <Typography variant="h5" component="div">
-                                            {flowerShop.name}
+                                            {metizShop.name}
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary" paragraph>
-                                            {flowerShop.description}
+                                            {metizShop.description}
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary" gutterBottom>
-                                            Адрес: {flowerShop.address}
+                                            Адрес: {metizShop.address}
                                         </Typography>
                                         {/* Отображение рейтинга */}
                                         <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
                                             <Rating
-                                                name={`rating-${flowerShop.id}`}
-                                                value={parseFloat(flowerShop.averageRating)}
+                                                name={`rating-${metizShop.id}`}
+                                                value={parseFloat(metizShop.averageRating)}
                                                 precision={0.1}
                                                 readOnly
                                             />
                                             <Typography variant="body2" color="text.secondary" sx={{ marginLeft: '8px' }}>
-                                                {parseFloat(flowerShop.averageRating).toFixed(1)} / 5 ({flowerShop.reviewCount} отзывов)
+                                                {parseFloat(metizShop.averageRating).toFixed(1)} / 5 ({metizShop.reviewCount} отзывов)
                                             </Typography>
                                         </Box>
                                     </CardContent>
@@ -236,7 +235,7 @@ function HomePage() {
                                             variant="contained"
                                             color="primary"
                                             component={Link}
-                                            to={`/flowershops/${flowerShop.id}`}
+                                            to={`/metizshops/${metizShop.id}`}
                                         >
                                             Подробнее
                                         </Button>
@@ -254,7 +253,7 @@ function HomePage() {
                 </Grid>
             )}
 
-            {flowerShops.length > 0 && (
+            {metizShops.length > 0 && (
                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
                     <Pagination
                         count={totalPages}

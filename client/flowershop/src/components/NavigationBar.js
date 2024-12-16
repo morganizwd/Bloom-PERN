@@ -37,8 +37,8 @@ const NavigationBar = () => {
                             </Button>
                         </>
                     )}
-                    {authData.isAuthenticated && authData.role === 'flowershop' && (
-                        <Button component={Link} to="/flowershop-admin" color="inherit" sx={{ marginRight: 2 }}>
+                    {authData.isAuthenticated && authData.role === 'metizshop' && (
+                        <Button component={Link} to="/metizshop-admin" color="inherit" sx={{ marginRight: 2 }}>
                             Админка магазина цветов
                         </Button>
                     )}

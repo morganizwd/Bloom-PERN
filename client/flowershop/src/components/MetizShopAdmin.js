@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
 
-function FlowerShopAdmin() {
+function MetizShopAdmin() {
     const { authData } = useContext(AuthContext);
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -26,7 +26,7 @@ function FlowerShopAdmin() {
 
     const fetchReviews = async () => {
         try {
-            const response = await axios.get(`/api/reviews/flowershop/${authData.user.id}`);
+            const response = await axios.get(`/api/reviews/metizshop/${authData.user.id}`);
             setReviews(response.data);
             setLoading(false);
         } catch (err) {
@@ -95,17 +95,17 @@ function FlowerShopAdmin() {
             </Box>
             <List>
                 <ListItem>
-                    <Button component={Link} to="/flowershop-admin/edit" variant="outlined" color="primary" fullWidth>
+                    <Button component={Link} to="/metizshop-admin/edit" variant="outlined" color="primary" fullWidth>
                         Редактировать информацию о магазине цветов
                     </Button>
                 </ListItem>
                 <ListItem>
-                    <Button component={Link} to="/flowershop-admin/products" variant="outlined" color="primary" fullWidth>
+                    <Button component={Link} to="/metizshop-admin/products" variant="outlined" color="primary" fullWidth>
                         Управление товарами
                     </Button>
                 </ListItem>
                 <ListItem>
-                    <Button component={Link} to="/flowershop-admin/orders" variant="outlined" color="primary" fullWidth>
+                    <Button component={Link} to="/metizshop-admin/orders" variant="outlined" color="primary" fullWidth>
                         Управление заказами
                     </Button>
                 </ListItem>
@@ -141,4 +141,4 @@ function FlowerShopAdmin() {
     );
 }
 
-export default FlowerShopAdmin;
+export default MetizShopAdmin;

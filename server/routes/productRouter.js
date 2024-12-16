@@ -23,7 +23,7 @@ const router = express.Router();
 
 router.post('/', authenticateToken, upload.single('photo'), ProductController.create);
 router.get('/', ProductController.findAll);
-router.get('/flowerShop/:flowerShopId', ProductController.findByFlowerShop);
+router.get('/metizShop/:metizShopId', ProductController.findByMetizShop);
 router.get('/:id', ProductController.findOne);
 router.put('/:id', authenticateToken, upload.single('photo'), ProductController.update);
 router.delete('/:id', authenticateToken, ProductController.delete);

@@ -3,7 +3,7 @@ import axios from '../api/axiosConfig';
 import { AuthContext } from '../context/AuthContext';
 import { Container, Typography, TextField, Button, Box, InputLabel, CardMedia } from '@mui/material';
 
-function EditFlowerShopInfo() {
+function EditMetizShopInfo() {
     const { authData } = useContext(AuthContext);
     const [formData, setFormData] = useState({
         name: '',
@@ -17,12 +17,12 @@ function EditFlowerShopInfo() {
     const [currentPhoto, setCurrentPhoto] = useState(null);
 
     useEffect(() => {
-        fetchFlowerShopInfo();
+        fetchMetizShopInfo();
     }, []);
 
-    const fetchFlowerShopInfo = async () => {
+    const fetchMetizShopInfo = async () => {
         try {
-            const response = await axios.get(`/api/flowershops/${authData.user.id}`);
+            const response = await axios.get(`/api/metizshops/${authData.user.id}`);
             setFormData({
                 name: response.data.name,
                 contact_person_name: response.data.contact_person_name,
@@ -62,7 +62,7 @@ function EditFlowerShopInfo() {
         }
 
         try {
-            const response = await axios.put(`/api/flowershops/${authData.user.id}`, data, {
+            const response = await axios.put(`/api/metizshops/${authData.user.id}`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -155,4 +155,4 @@ function EditFlowerShopInfo() {
     );
 }
 
-export default EditFlowerShopInfo;
+export default EditMetizShopInfo;

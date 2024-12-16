@@ -22,7 +22,7 @@ function ProductList() {
         try {
             setLoading(true);
             setError(null);
-            const response = await axios.get(`/api/products/flowershop/${authData.user.id}`);
+            const response = await axios.get(`/api/products/metizshop/${authData.user.id}`);
             setProducts(response.data);
             setLoading(false);
         } catch (error) {
@@ -52,7 +52,7 @@ function ProductList() {
                 <Typography variant="h4">Управление товарами</Typography>
                 <Button
                     component={Link}
-                    to="/flowershop-admin/products/add"
+                    to="/metizshop-admin/products/add"
                     variant="contained"
                     color="primary"
                     startIcon={<AddCircleIcon />}
@@ -99,7 +99,7 @@ function ProductList() {
                                             </Typography>
                                         </CardContent>
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', padding: 1 }}>
-                                            <IconButton component={Link} to={`/flowershop-admin/products/edit/${product.id}`} color="primary">
+                                            <IconButton component={Link} to={`/metizshop-admin/products/edit/${product.id}`} color="primary">
                                                 <EditIcon />
                                             </IconButton>
                                             <IconButton onClick={() => handleDelete(product.id)} color="secondary">

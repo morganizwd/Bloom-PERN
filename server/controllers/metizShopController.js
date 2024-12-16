@@ -1,11 +1,11 @@
-const { FlowerShop, Product, Review, User, sequelize } = require('../models/models');
+const { MetizShop, Product, Review, User, sequelize } = require('../models/models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
 const { Op } = require('sequelize');
 
-class FlowerShopController {
+class MetizShopController {
     async registration(req, res) {
         try {
             const {
@@ -19,14 +19,14 @@ class FlowerShopController {
                 address,
             } = req.body;
 
-            const existingFlowerShop = await FlowerShop.findOne({ where: { email } });
-            if (existingFlowerShop) {
+            const existingMetizShop = await MetizShop.findOne({ where: { email } });
+            if (existingMetizShop) {
                 return res.status(400).json({ message: 'Магазин цветов с таким email уже существует' });
             }
 
             const passwordHash = await bcrypt.hash(password, 12);
 
-            const flowerShop = await FlowerShop.create({
+            const MetizShop = await MetizShop.create({
                 name,
                 contact_person_name,
                 registration_number,
@@ -35,10 +35,10 @@ class FlowerShopController {
                 email,
                 password: passwordHash,
                 address,
-                photo: req.file ? `/uploads/flowershops/${req.file.filename}` : null,
+                photo: req.file ? `/uploads/MetizShops/${req.file.filename}` : null,
             });
 
-            res.status(201).json(flowerShop);
+            res.status(201).json(MetizShop);
         } catch (error) {
             console.error('Ошибка при регистрации магазина цветов:', error);
             res.status(500).json({ message: 'Ошибка сервера' });
@@ -49,23 +49,23 @@ class FlowerShopController {
         try {
             const { email, password } = req.body;
 
-            const flowerShop = await FlowerShop.findOne({ where: { email } });
-            if (!flowerShop) {
+            const MetizShop = await MetizShop.findOne({ where: { email } });
+            if (!MetizShop) {
                 return res.status(404).json({ message: 'Магазин цветов не найден' });
             }
 
-            const isMatch = await bcrypt.compare(password, flowerShop.password);
+            const isMatch = await bcrypt.compare(password, MetizShop.password);
             if (!isMatch) {
                 return res.status(400).json({ message: 'Неверный пароль' });
             }
 
             const token = jwt.sign(
-                { flowerShopId: flowerShop.id },
+                { MetizShopId: MetizShop.id },
                 process.env.JWT_SECRET || 'your_jwt_secret_key',
                 { expiresIn: '24h' }
             );
 
-            res.json({ token, user: flowerShop });
+            res.json({ token, user: MetizShop });
         } catch (error) {
             console.error('Ошибка при входе магазина цветов:', error);
             res.status(500).json({ message: 'Ошибка сервера' });
@@ -81,13 +81,13 @@ class FlowerShopController {
 
             const token = authHeader.split(' ')[1];
             const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret_key');
-            const flowerShop = await FlowerShop.findByPk(decoded.flowerShopId);
+            const MetizShop = await MetizShop.findByPk(decoded.MetizShopId);
 
-            if (!flowerShop) {
+            if (!MetizShop) {
                 return res.status(404).json({ message: 'Магазин цветов не найден' });
             }
 
-            res.json(flowerShop);
+            res.json(MetizShop);
         } catch (error) {
             console.error('Ошибка при аутентификации магазина цветов:', error);
             res.status(500).json({ message: 'Ошибка сервера' });
@@ -98,7 +98,7 @@ class FlowerShopController {
         try {
             const { id } = req.params;
 
-            const flowerShop = await FlowerShop.findByPk(id, {
+            const MetizShop = await MetizShop.findByPk(id, {
                 include: [
                     { model: Product },
                     {
@@ -108,11 +108,11 @@ class FlowerShopController {
                 ],
             });
 
-            if (!flowerShop) {
+            if (!MetizShop) {
                 return res.status(404).json({ message: 'Магазин цветов не найден' });
             }
 
-            res.json(flowerShop);
+            res.json(MetizShop);
         } catch (error) {
             console.error('Ошибка при получении магазина цветов:', error);
             res.status(500).json({ message: 'Ошибка сервера' });
@@ -141,7 +141,7 @@ class FlowerShopController {
                 );
             }
 
-            const { rows, count } = await FlowerShop.findAndCountAll({
+            const { rows, count } = await MetizShop.findAndCountAll({
                 where: whereConditions,
                 include: [
                     {
@@ -161,7 +161,7 @@ class FlowerShopController {
                         ],
                     ],
                 },
-                group: ['FlowerShop.id'],
+                group: ['MetizShop.id'],
                 having: havingConditions,
                 order: [['name', 'ASC']],
                 limit: limit ? parseInt(limit) : undefined,
@@ -170,7 +170,7 @@ class FlowerShopController {
             });
 
             res.json({
-                flowerShops: rows,
+                MetizShops: rows,
                 total: count.length,
             });
         } catch (error) {
@@ -191,10 +191,10 @@ class FlowerShopController {
                 password,
                 address,
             } = req.body;
-            const flowerShopId = req.params.id;
+            const MetizShopId = req.params.id;
 
-            const flowerShop = await FlowerShop.findByPk(flowerShopId);
-            if (!flowerShop) {
+            const MetizShop = await MetizShop.findByPk(MetizShopId);
+            if (!MetizShop) {
                 return res.status(404).json({ message: 'Магазин цветов не найден' });
             }
 
@@ -212,18 +212,18 @@ class FlowerShopController {
             }
             
             if (req.file) {
-                const uploadDir = path.join(__dirname, '../uploads/flowershops');
+                const uploadDir = path.join(__dirname, '../uploads/MetizShops');
                 if (!fs.existsSync(uploadDir)) {
                     fs.mkdirSync(uploadDir, { recursive: true });
                 }
-                const photoPath = `/uploads/flowershops/${flowerShopId}_${req.file.originalname}`;
-                fs.writeFileSync(path.join(uploadDir, `${flowerShopId}_${req.file.originalname}`), fs.readFileSync(req.file.path));
+                const photoPath = `/uploads/MetizShops/${MetizShopId}_${req.file.originalname}`;
+                fs.writeFileSync(path.join(uploadDir, `${MetizShopId}_${req.file.originalname}`), fs.readFileSync(req.file.path));
                 updatedData.photo = photoPath;
             }
 
-            await flowerShop.update(updatedData);
+            await MetizShop.update(updatedData);
 
-            res.json(flowerShop);
+            res.json(MetizShop);
         } catch (error) {
             console.error('Ошибка при обновлении магазина цветов:', error);
             res.status(500).json({ message: 'Ошибка сервера' });
@@ -232,19 +232,19 @@ class FlowerShopController {
 
     async delete(req, res) {
         try {
-            const flowerShop = await FlowerShop.findByPk(req.params.id);
-            if (!flowerShop) {
+            const MetizShop = await MetizShop.findByPk(req.params.id);
+            if (!MetizShop) {
                 return res.status(404).json({ message: 'Магазин цветов не найден' });
             }
 
-            if (flowerShop.photo) {
-                const filePath = path.join(__dirname, '..', flowerShop.photo);
+            if (MetizShop.photo) {
+                const filePath = path.join(__dirname, '..', MetizShop.photo);
                 if (fs.existsSync(filePath)) {
                     fs.unlinkSync(filePath);
                 }
             }
 
-            await flowerShop.destroy();
+            await MetizShop.destroy();
 
             res.status(200).json({ message: 'Магазин цветов успешно удален' });
         } catch (error) {
@@ -254,4 +254,4 @@ class FlowerShopController {
     }
 }
 
-module.exports = new FlowerShopController();
+module.exports = new MetizShopController();

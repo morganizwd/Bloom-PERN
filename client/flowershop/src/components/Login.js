@@ -26,7 +26,7 @@ function Login() {
         e.preventDefault();
 
         try {
-            const url = role === 'user' ? '/api/users/login' : '/api/flowershops/login';
+            const url = role === 'user' ? '/api/users/login' : '/api/metizshops/login';
             const response = await axios.post(url, formData);
             const token = response.data.token;
 
@@ -42,8 +42,8 @@ function Login() {
 
             if (role === 'user') {
                 navigate('/'); 
-            } else if (role === 'flowershop') {
-                navigate('/flowershop-admin'); 
+            } else if (role === 'metizshops') {
+                navigate('/metizshops-admin'); 
             }
         } catch (error) {
             console.error('Ошибка при входе:', error);
@@ -65,7 +65,7 @@ function Login() {
                     sx={{ marginBottom: '20px' }}
                 >
                     <MenuItem value="user">Покупатель</MenuItem>
-                    <MenuItem value="flowershop">Магазин цветов</MenuItem>
+                    <MenuItem value="metizshops">Магазин цветов</MenuItem>
                 </Select>
 
                 <TextField
