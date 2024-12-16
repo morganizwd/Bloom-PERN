@@ -20,6 +20,7 @@ class MetizShopController {
             } = req.body;
 
             const existingMetizShop = await MetizShop.findOne({ where: { email } });
+
             if (existingMetizShop) {
                 return res.status(400).json({ message: 'Магазин цветов с таким email уже существует' });
             }
@@ -40,7 +41,7 @@ class MetizShopController {
 
             res.status(201).json(MetizShop);
         } catch (error) {
-            console.error('Ошибка при регистрации магазина цветов:', error);
+            console.error('Ошибка при регистрации магазина метизов:', error);
             res.status(500).json({ message: 'Ошибка сервера' });
         }
     }

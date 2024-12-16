@@ -146,7 +146,6 @@ function Registration() {
         }
     };
 
-    // Helper function to get readable field labels
     const getFieldLabel = (fieldName) => {
         const labels = {
             name: 'Имя',
@@ -180,7 +179,7 @@ function Registration() {
                         onChange={handleRoleChange}
                     >
                         <MenuItem value="user">Покупатель</MenuItem>
-                        <MenuItem value="metizshop">Магазин цветов</MenuItem>
+                        <MenuItem value="metizshop">Магазин метизов</MenuItem>
                     </Select>
                 </FormControl>
 
